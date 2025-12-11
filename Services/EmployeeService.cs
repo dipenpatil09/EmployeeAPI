@@ -11,12 +11,12 @@ namespace EmployeeAPI.Services
             _repository = repository;
         }
 
-        public Employee GetById(int id)
+        public async Task<Employee> GetByIdAsync(int id)
         {
             if (id < 0)
                 return null;
             else
-                return _repository.GetById(id);
+                return await _repository.GetByIdAsync(id);
         }
     }
 }

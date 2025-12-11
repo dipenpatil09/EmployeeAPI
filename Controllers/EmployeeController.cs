@@ -16,11 +16,13 @@ namespace EmployeeAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetEmployeeById(int id) 
+        public async Task<ActionResult> GetEmployeeById(int id) 
         {
             if (id < 0)
                 return BadRequest("Invalid Id");
-            var employee = _employeeService.GetById(id);
+            var employee = await _employeeService.GetByIdAsync(id);
+            if(employee == null)
+                return NotFound("Employee not found");
             return Ok(employee);
         }
     }

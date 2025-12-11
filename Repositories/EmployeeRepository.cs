@@ -1,19 +1,21 @@
-﻿using EmployeeAPI.Models;
+﻿using EmployeeAPI.Data;
+using EmployeeAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPI.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-
-        private readonly List<Employee> _employees = new()
+        private readonly MyDBContext myDBContext;
+        public EmployeeRepository(MyDBContext dbContext)
         {
-            new Employee { Id = 1, Name = "Sansa", Department = "IT", Salary = 80000 },
-            new Employee { Id = 2, Name = "Arya", Department = "HR", Salary = 50000 }
-        };
+            myDBContext = dbContext;
+        }
 
-        public Employee GetById(int id)
+       
+        public async Task<Employee> GetByIdAsync(int id)
         {
-            return _employees.Where(x => x.Id == id)?.FirstOrDefault();
+            return await myDBContext.Employees.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

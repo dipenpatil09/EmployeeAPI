@@ -4,6 +4,6 @@ namespace EmployeeAPI.Services
 {
     public interface IEmployeeService
     {
-        Employee GetById(int id);
+        Task<Employee> GetByIdAsync(int id);
     }
 }
